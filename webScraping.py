@@ -66,3 +66,29 @@ while preco >= 4.74:
     fim = inicio + 4 # Aqui eu pego o início + 4 (que dá os 2 valores antes da vírgula + os 2 valores depois da             #vírgula)
     preco=float(texto[inicio:fim])
 print (preco)
+
+
+# =============================================================================
+# Scraper de dados do SIDRA
+# =============================================================================
+# curso python 1: exemplo de análise de dados em python - youtube
+import pandas as pd
+from pandas import *
+from seaborn import *
+from matplotlib.pyplot import *
+import numpy as np
+from statsmodels.formula.api import *
+#matplotlib inline
+
+pd.options.display.max_columns = None
+pd.options.display.max_seq_items = None
+np.set_printoptions(threshold=np.inf)
+
+import requests
+r = requests.get('http://api.sidra.ibge.gov.br/values/t/261/n1/all/n2/all/n3/all/v/all/p/all/c1/all/c2/all/c58/0/d/v93%200,v1000093%202')
+df = pd.DataFrame(r.json())
+df.to_csv('sidra.texto.csv')   #3
+df.head(10)
+df.columns = df.iloc[0,:];df.drop(0,inplace=True)
+
+
